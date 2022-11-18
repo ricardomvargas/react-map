@@ -2,8 +2,9 @@ import React from 'react';
 import { Map, View } from 'ol';
 import TileLayer from 'ol/layer/Tile.js';
 import OSM from 'ol/source/OSM.js';
+// import BaseEvent from 'ol/events/Event';
 
-import { State, Action, Dispatch, MapProviderProps } from './MapTypes';
+import { State, Action, Dispatch, MapProviderProps } from './MapContextTypes';
 
 const MapStateContext = React.createContext<{ state: State; dispatch: Dispatch } | undefined>(
   undefined
@@ -32,6 +33,11 @@ const MapReducer = (state: State, action: Action) => {
     case 'add-interaction': {
       const newState = state;
       newState.addInteraction(action.payload.interaction);
+      return newState;
+    }
+    case 'add-event': {
+      const newState = state;
+      newState.on(action.payload.eventName, action.payload.callback);
       return newState;
     }
   }
