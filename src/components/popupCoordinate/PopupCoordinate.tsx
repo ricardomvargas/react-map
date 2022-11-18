@@ -8,8 +8,8 @@ type PopupCoordinateProps = {
   long: string;
 };
 
-const PopupCoordinate = ({ inputRef, lat, long }: PopupCoordinateProps) => {
-  return (
+const PopupCoordinate = ({ inputRef, lat, long }: PopupCoordinateProps) =>
+  lat.length > 0 && long.length > 0 ? (
     <div className='popup-coordinate' ref={inputRef}>
       <p>
         <strong>Lat:</strong>
@@ -20,7 +20,8 @@ const PopupCoordinate = ({ inputRef, lat, long }: PopupCoordinateProps) => {
         {` ${long}`}
       </p>
     </div>
+  ) : (
+    <div ref={inputRef}></div>
   );
-};
 
 export default PopupCoordinate;
