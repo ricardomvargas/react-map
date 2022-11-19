@@ -2,6 +2,7 @@ import React from 'react';
 import { Map, Overlay } from 'ol';
 import Interaction from 'ol/interaction/Interaction';
 import { events } from 'openlayers';
+import Control from 'ol/control/Control';
 
 export type State = Map;
 
@@ -12,7 +13,8 @@ export type Action =
     }
   | { type: 'add-overlay'; payload: { overlay: Overlay } }
   | { type: 'add-interaction'; payload: { interaction: Interaction } }
-  | { type: 'add-event'; payload: { eventName: events; callback: any } };
+  | { type: 'add-event'; payload: { eventName: events; callback: any } }
+  | { type: 'add-control'; payload: { control: Control } };
 
 export type Dispatch = (action: Action) => void;
 
