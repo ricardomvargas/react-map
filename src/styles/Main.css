@@ -13,3 +13,10 @@ div {
 ul {
   list-style: none;
 }
+/***************
+  OpenLayers main styles
+***************/
+.ol-zoom {
+  left: unset;
+  right: 8px;
+}
