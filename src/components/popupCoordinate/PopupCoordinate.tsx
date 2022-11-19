@@ -4,6 +4,14 @@ import Wrapper from '../wrapper/Wrapper';
 
 import './popupCoordinate.css';
 
+// #TODO: Fazer efeito hover nos botões
+
+// #TODO: Dar feedback para o usuário de que a coordenada foi copiada
+
+// #TODO #IDEIA: Pensar sobre fechar a modal após a coordenada ter sido copiada
+
+// #TODO: Botão não parecem botões, testar outras imagens
+
 type PopupCoordinateProps = {
   inputRef: React.MutableRefObject<null>;
   lat: number;
@@ -21,14 +29,8 @@ const PopupCoordinate = ({
 }: PopupCoordinateProps) => (
   <Wrapper inputRef={inputRef} styleClasses={['popup-coordinate']}>
     <div>
-      <p>
-        <strong>Lat:</strong>
-        {` ${lat}`}
-      </p>
-      <p>
-        <strong>Long:</strong>
-        {` ${long}`}
-      </p>
+      <p>{` ${lat}`}</p>
+      <p>{` ${long}`}</p>
     </div>
     <div className='popup__button-container'>
       <button onClick={() => copyAction()}>

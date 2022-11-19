@@ -6,6 +6,10 @@ import { useMap } from '../../context/mapContext/MapContext';
 import PopupCoordinate from '../popupCoordinate/PopupCoordinate';
 import MousePositionInfo from '../mousePositionInfo/MousePositionInfo';
 
+/* #TODO: Funcionalidade para adicionar marcadores no mapa onde o usuário clicar, ao clicar no marcador
+ * exibir o PopupCoordinate (estudar mudar o nome do componente).
+ */
+
 import 'ol/ol.css';
 import './mapWrapper.css';
 

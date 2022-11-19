@@ -2,6 +2,7 @@ import React from 'react';
 
 import './wrapper.css';
 
+// #TODO: É necessário um tipo que já é opcional ser do tipo undefined?
 type WrapperProps = {
   inputRef?: React.MutableRefObject<null>;
   children?: React.ReactNode;
@@ -16,6 +17,7 @@ const buildClassesNames = (styleClasses: string[] | undefined) =>
       : 'wrapper'
     : 'wrapper';
 
+// #TODO #TESTAR: É necessário iniciar as variaveis como undefined?
 const Wrapper = ({
   inputRef,
   children,
