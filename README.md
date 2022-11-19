@@ -19,5 +19,5 @@ Web app with OpenLayers and React.
 ### Installing and running the app
 
 - Install dependecies: npm install
-- Execute the project: npm run dev (it runs on port 3000)
+- Execute the project: npm run dev (it runs on localhost:3000)
 - Execute tests: npm run test
