@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Overlay } from 'ol';
 
-import { useMap } from '../../context/MapContext';
+import { useMap } from '../../context/mapContext/MapContext';
 
 import PopupCoordinate from '../popupCoordinate/PopupCoordinate';
 
