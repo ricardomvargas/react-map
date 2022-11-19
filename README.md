@@ -11,6 +11,8 @@ Web app with OpenLayers and React.
 - [webpack] (https://webpack.js.org/)
 - [jest] (https://jestjs.io/)
 - [testing-library] (https://testing-library.com/)
+- [OpenLayers] (https://openlayers.org/)
+- [proj4js] (http://proj4js.org/)
 
 ## Getting Started
 
