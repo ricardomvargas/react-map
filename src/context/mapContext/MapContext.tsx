@@ -2,7 +2,8 @@ import React from 'react';
 import { Map, View } from 'ol';
 import TileLayer from 'ol/layer/Tile.js';
 import OSM from 'ol/source/OSM.js';
-// import BaseEvent from 'ol/events/Event';
+
+import { Projections, defineProjection } from './mapUtils';
 
 import { State, Action, Dispatch, MapProviderProps } from './MapContextTypes';
 
@@ -11,33 +12,35 @@ const MapStateContext = React.createContext<{ state: State; dispatch: Dispatch }
 );
 
 const MapReducer = (state: State, action: Action) => {
-  const { type } = action;
+  const { type, payload } = action;
 
   switch (type) {
     case 'create-map': {
+      defineProjection(Projections.EPSG_28992.name, Projections.EPSG_28992.value);
       const newState = new Map({
         view: new View({
-          center: [0, 0],
-          zoom: 2,
+          center: [142735.75, 470715.91],
+          zoom: 9,
+          projection: Projections.EPSG_28992.name,
         }),
         layers: [new TileLayer({ source: new OSM() })],
-        target: action.payload.mapRef,
+        target: payload.mapRef,
       });
       return newState;
     }
     case 'add-overlay': {
       const newState = state;
-      newState.addOverlay(action.payload.overlay);
+      newState.addOverlay(payload.overlay);
       return newState;
     }
     case 'add-interaction': {
       const newState = state;
-      newState.addInteraction(action.payload.interaction);
+      newState.addInteraction(payload.interaction);
       return newState;
     }
     case 'add-event': {
       const newState = state;
-      newState.on(action.payload.eventName, action.payload.callback);
+      newState.on(payload.eventName, payload.callback);
       return newState;
     }
   }
