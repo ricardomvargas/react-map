@@ -1,0 +1,15 @@
+.popup-coordinate {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.popup__button-container button {
+  border: none;
+  background: none;
+  margin-left: 15px;
+}
+
+.popup__button-container button img {
+  width: 25px;
+}

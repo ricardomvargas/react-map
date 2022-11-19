@@ -3,7 +3,6 @@ import { Overlay } from 'ol';
 
 import { useMap } from '../../context/mapContext/MapContext';
 
-import Wrapper from '../wrapper/Wrapper';
 import PopupCoordinate from '../popupCoordinate/PopupCoordinate';
 import MousePositionInfo from '../mousePositionInfo/MousePositionInfo';
 
@@ -13,7 +12,7 @@ import './mapWrapper.css';
 const MapWrapper = () => {
   const [clickedCoordinates, setClickedCoordinages] = useState({ lat: 0, long: 0 });
   const [pointCoordinates, setPointerCoordinates] = useState({ lat: 0, long: 0 });
-  const [existPopupOverlay, setExistPopupOverlay] = useState(false);
+  const [popupCoordinateOverlay, setPopupCoordinateOverlay] = useState<Overlay | undefined>();
   const { dispatch } = useMap();
   const mapRef = useRef(null);
   const popupRef = useRef(null);
@@ -23,20 +22,21 @@ const MapWrapper = () => {
   }, []);
 
   const onClickHandler = (e: any) => {
-    const popup = new Overlay({
-      element: popupRef?.current ?? undefined,
-    });
-
-    if (!existPopupOverlay) {
-      dispatch({ type: 'add-overlay', payload: { overlay: popup } });
-      setExistPopupOverlay(true);
-    }
-
     const tempCoordinate = e.coordinate.join().split(',');
-    setClickedCoordinages({ lat: tempCoordinate[0], long: tempCoordinate[1] });
 
-    popup?.setPosition(undefined);
-    popup?.setPosition(e.coordinate);
+    if (!popupCoordinateOverlay) {
+      const popup = new Overlay({
+        element: popupRef?.current ?? undefined,
+      });
+      dispatch({ type: 'add-overlay', payload: { overlay: popup } });
+      setPopupCoordinateOverlay(popup);
+      setClickedCoordinages({ lat: tempCoordinate[0], long: tempCoordinate[1] });
+      popup?.setPosition(undefined);
+      popup?.setPosition(e.coordinate);
+    } else {
+      popupCoordinateOverlay?.setPosition(undefined);
+      popupCoordinateOverlay?.setPosition(e.coordinate);
+    }
   };
 
   const pointerMoveHandler = (e: any) =>
@@ -60,9 +60,15 @@ const MapWrapper = () => {
   return (
     <>
       <div ref={mapRef} id='ol-map' className='map-wrapper'></div>
-      <Wrapper inputRef={popupRef}>
-        <PopupCoordinate lat={clickedCoordinates.lat} long={clickedCoordinates.long} />
-      </Wrapper>
+      <PopupCoordinate
+        lat={clickedCoordinates.lat}
+        long={clickedCoordinates.long}
+        inputRef={popupRef}
+        copyAction={() =>
+          navigator.clipboard.writeText(`${clickedCoordinates.lat}, ${clickedCoordinates.long}`)
+        }
+        closeAction={() => popupCoordinateOverlay?.setPosition(undefined)}
+      />
       <MousePositionInfo lat={pointCoordinates.lat} long={pointCoordinates.long} />
     </>
   );
