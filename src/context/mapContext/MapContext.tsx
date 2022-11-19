@@ -43,6 +43,11 @@ const MapReducer = (state: State, action: Action) => {
       newState.on(payload.eventName, payload.callback);
       return newState;
     }
+    case 'add-control': {
+      const newState = state;
+      newState.addControl(payload.control);
+      return newState;
+    }
   }
 };
 

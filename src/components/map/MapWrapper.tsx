@@ -3,24 +3,23 @@ import { Overlay } from 'ol';
 
 import { useMap } from '../../context/mapContext/MapContext';
 
+import Wrapper from '../wrapper/Wrapper';
 import PopupCoordinate from '../popupCoordinate/PopupCoordinate';
+import MousePositionInfo from '../mousePositionInfo/MousePositionInfo';
 
 import 'ol/ol.css';
 import './mapWrapper.css';
 
 const MapWrapper = () => {
-  const [currentCoordinates, setCurrentCoordinates] = useState({ lat: '', long: '' });
+  const [clickedCoordinates, setClickedCoordinages] = useState({ lat: 0, long: 0 });
+  const [pointCoordinates, setPointerCoordinates] = useState({ lat: 0, long: 0 });
   const [existPopupOverlay, setExistPopupOverlay] = useState(false);
   const { dispatch } = useMap();
   const mapRef = useRef(null);
   const popupRef = useRef(null);
 
   useEffect(() => {
-    dispatch({
-      type: 'create-map',
-      payload: { mapRef: mapRef?.current ?? undefined },
-    });
-    dispatch({ type: 'add-event', payload: { eventName: 'click', callback: onClickHandler } });
+    mapInit();
   }, []);
 
   const onClickHandler = (e: any) => {
@@ -34,20 +33,37 @@ const MapWrapper = () => {
     }
 
     const tempCoordinate = e.coordinate.join().split(',');
-    setCurrentCoordinates({ lat: tempCoordinate[0], long: tempCoordinate[1] });
+    setClickedCoordinages({ lat: tempCoordinate[0], long: tempCoordinate[1] });
 
     popup?.setPosition(undefined);
     popup?.setPosition(e.coordinate);
   };
 
+  const pointerMoveHandler = (e: any) =>
+    setPointerCoordinates({
+      lat: e.coordinate.join().split(',')[0],
+      long: e.coordinate.join().split(',')[1],
+    });
+
+  const mapInit = () => {
+    dispatch({
+      type: 'create-map',
+      payload: { mapRef: mapRef?.current ?? undefined },
+    });
+    dispatch({ type: 'add-event', payload: { eventName: 'click', callback: onClickHandler } });
+    dispatch({
+      type: 'add-event',
+      payload: { eventName: 'pointermove', callback: pointerMoveHandler },
+    });
+  };
+
   return (
     <>
-      <PopupCoordinate
-        inputRef={popupRef}
-        lat={currentCoordinates.lat}
-        long={currentCoordinates.long}
-      />
       <div ref={mapRef} id='ol-map' className='map-wrapper'></div>
+      <Wrapper inputRef={popupRef}>
+        <PopupCoordinate lat={clickedCoordinates.lat} long={clickedCoordinates.long} />
+      </Wrapper>
+      <MousePositionInfo lat={pointCoordinates.lat} long={pointCoordinates.long} />
     </>
   );
 };
