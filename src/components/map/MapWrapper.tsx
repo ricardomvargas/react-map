@@ -33,10 +33,10 @@ const MapWrapper = () => {
         element: popupRef?.current ?? undefined,
       });
       dispatch({ type: 'add-overlay', payload: { overlay: popup } });
-      setPopupCoordinateOverlay(popup);
-      setClickedCoordinages({ lat: tempCoordinate[0], long: tempCoordinate[1] });
       popup?.setPosition(undefined);
       popup?.setPosition(e.coordinate);
+      setPopupCoordinateOverlay(popup);
+      setClickedCoordinages({ lat: tempCoordinate[0], long: tempCoordinate[1] });
     } else {
       popupCoordinateOverlay?.setPosition(undefined);
       popupCoordinateOverlay?.setPosition(e.coordinate);
