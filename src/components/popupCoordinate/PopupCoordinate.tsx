@@ -4,13 +4,7 @@ import Wrapper from '../wrapper/Wrapper';
 
 import './popupCoordinate.css';
 
-// #TODO: Fazer efeito hover nos botões
-
-// #TODO: Dar feedback para o usuário de que a coordenada foi copiada
-
 // #TODO #IDEIA: Pensar sobre fechar a modal após a coordenada ter sido copiada
-
-// #TODO: Botão não parecem botões, testar outras imagens
 
 type PopupCoordinateProps = {
   inputRef: React.MutableRefObject<null>;
@@ -28,17 +22,29 @@ const PopupCoordinate = ({
   closeAction,
 }: PopupCoordinateProps) => (
   <Wrapper inputRef={inputRef} styleClasses={['popup-coordinate']}>
+    <div className='popup__button_container'>
+      <button className='button_container__button' onClick={() => copyAction()}>
+        Copy{' '}
+        <img
+          className='button_container__img'
+          src='/assets/images/copy_icon.svg'
+          title='Copy coordinates'
+          alt='copy coordinates'
+        />
+      </button>
+      <button className='button_container__button' onClick={() => closeAction()}>
+        Close{' '}
+        <img
+          className='button_container__img'
+          src='/assets/images/close_icon.svg'
+          title='Close'
+          alt='close'
+        />
+      </button>
+    </div>
     <div>
       <p>{` ${lat}`}</p>
       <p>{` ${long}`}</p>
-    </div>
-    <div className='popup__button-container'>
-      <button onClick={() => copyAction()}>
-        <img src='/assets/images/copy.svg' title='Copy coordinates' alt='copy coordinates' />
-      </button>
-      <button onClick={() => closeAction()}>
-        <img src='/assets/images/close.svg' title='Close' alt='close' />
-      </button>
     </div>
   </Wrapper>
 );
