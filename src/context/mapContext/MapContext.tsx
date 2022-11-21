@@ -3,7 +3,8 @@ import { Map, View } from 'ol';
 import TileLayer from 'ol/layer/Tile.js';
 import OSM from 'ol/source/OSM.js';
 
-import { Projections, defineProjection } from './mapUtils';
+import { defineProjection } from './mapUtils';
+import { PROJECTIONS } from '../../context/mapContext/mapDefinitions';
 
 import { State, Action, Dispatch, MapProviderProps } from './MapContextTypes';
 
@@ -16,12 +17,12 @@ const MapReducer = (state: State, action: Action) => {
 
   switch (type) {
     case 'create-map': {
-      defineProjection(Projections.EPSG_28992.name, Projections.EPSG_28992.value);
+      defineProjection(PROJECTIONS.EPSG_28992.name, PROJECTIONS.EPSG_28992.value);
       const newState = new Map({
         view: new View({
           center: [142735.75, 470715.91],
           zoom: 9,
-          projection: Projections.EPSG_28992.name,
+          projection: PROJECTIONS.EPSG_28992.name,
         }),
         layers: [new TileLayer({ source: new OSM() })],
         target: payload.mapRef,
@@ -31,6 +32,12 @@ const MapReducer = (state: State, action: Action) => {
     case 'add-overlay': {
       const newState = state;
       newState.addOverlay(payload.overlay);
+      return newState;
+    }
+    case 'add-layer': {
+      console.log('payload.layer:', payload.layer);
+      const newState = state;
+      newState.addLayer(payload.layer);
       return newState;
     }
     case 'add-interaction': {
@@ -46,6 +53,11 @@ const MapReducer = (state: State, action: Action) => {
     case 'add-control': {
       const newState = state;
       newState.addControl(payload.control);
+      return newState;
+    }
+    case 'remove-layer': {
+      const newState = state;
+      newState.removeLayer(payload.layer);
       return newState;
     }
   }
