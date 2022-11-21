@@ -13,12 +13,6 @@ import MousePositionInfo from '../mousePositionInfo/MousePositionInfo';
 import { MWS_LAYERS } from '../../context/mapContext/mapDefinitions';
 import { MWSLayer } from '../../context/mapContext/MapContextTypes';
 
-/* #TODO: Funcionalidade para adicionar marcadores no mapa onde o usuário clicar, ao clicar no marcador
- * exibir o PopupCoordinate (estudar mudar o nome do componente).
- */
-
-// #TODO: Inverter os itens do objeto de: { lat: 0, long: 0 } para { long: 0, lat: 0 }
-
 import 'ol/ol.css';
 import './mapWrapper.css';
 
