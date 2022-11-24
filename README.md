@@ -1,4 +1,4 @@
-# cyclomedia-assessment
+# React Map
 
 ## About The Project
 
@@ -25,6 +25,7 @@ Web app with OpenLayers and React.
 ### Features
 
 The Map and Projection are focused in The Netherlands.
+
 - Move the mouse to see coordinates in a bottom component.
 - On click on the map will open a modal window with the clicked coordinates. The modal window have two buttons: copy and close.
 - Use the side menu to add layers, there are 8 layers that can be added and removed.
