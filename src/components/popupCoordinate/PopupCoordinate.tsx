@@ -30,7 +30,7 @@ const PopupCoordinate = ({
   return (
     <Wrapper
       inputRef={inputRef}
-      styleClasses={['popup-coordinate', lat || long > 0 ? 'display-content' : 'hide-content']}
+      cssClasses={['popup-coordinate', lat || long > 0 ? 'display-content' : 'hide-content']}
     >
       <div className='popup__button_container'>
         <button className='button_container__button' onClick={() => onCopyClickHandle()}>
@@ -53,8 +53,8 @@ const PopupCoordinate = ({
         </button>
       </div>
       <div>
-        <p>{` ${lat}`}</p>
-        <p>{` ${long}`}</p>
+        <p>{lat}</p>
+        <p>{long}</p>
       </div>
     </Wrapper>
   );
