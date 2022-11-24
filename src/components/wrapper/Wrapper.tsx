@@ -6,18 +6,18 @@ type WrapperProps = {
   inputRef?: React.MutableRefObject<null>;
   children?: React.ReactNode;
   id?: string;
-  styleClasses?: string[];
+  cssClasses?: string[];
 };
 
-const buildClassesNames = (styleClasses: string[] | undefined) =>
-  styleClasses
-    ? styleClasses?.length > 0
-      ? `wrapper ${styleClasses?.join()?.replace(',', ' ')}`
+const buildClassNames = (cssClasses: string[] | undefined) =>
+  cssClasses
+    ? cssClasses?.length > 0
+      ? `wrapper ${cssClasses?.join()?.replace(',', ' ')}`
       : 'wrapper'
     : 'wrapper';
 
-const Wrapper = ({ inputRef, children, id, styleClasses }: WrapperProps) => (
-  <div id={id ? id : ''} className={buildClassesNames(styleClasses)} ref={inputRef}>
+const Wrapper = ({ inputRef, children, id, cssClasses }: WrapperProps) => (
+  <div id={id ? id : ''} className={buildClassNames(cssClasses)} ref={inputRef}>
     {children}
   </div>
 );

@@ -10,7 +10,7 @@ export type MousePositionInfoProps = {
 };
 
 const MousePositionInfo = ({ lat, long }: MousePositionInfoProps) => (
-  <Wrapper styleClasses={['mouse-position-info']}>
+  <Wrapper cssClasses={['mouse-position-info']}>
     <p>{`${lat} | ${long}`}</p>
   </Wrapper>
 );

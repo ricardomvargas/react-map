@@ -23,7 +23,7 @@ export type Dispatch = (action: Action) => void;
 
 export type MapProviderProps = { children: React.ReactNode };
 
-export type MWSLayersNames =
+export type MWSLayerNames =
   | 'excavationAreas'
   | 'regionalHiking'
   | 'ruralWalkingRoutes'
@@ -34,7 +34,7 @@ export type MWSLayersNames =
   | 'nationalRoadFile';
 
 export type MWSLayer = {
-  name: MWSLayersNames;
+  name: MWSLayerNames;
   url: string;
   params: {
     layerName: number | string;

@@ -18,8 +18,8 @@ import './mapWrapper.css';
 
 const MapWrapper = () => {
   const { state, dispatch } = useMap();
-  const [clickedCoordinates, setClickedCoordinages] = useState({ lat: 0, long: 0 });
-  const [pointCoordinates, setPointerCoordinates] = useState({ lat: 0, long: 0 });
+  const [clickedCoordinates, setClickedCoordinates] = useState({ lat: 0, long: 0 });
+  const [pointerCoordinates, setPointerCoordinates] = useState({ lat: 0, long: 0 });
   const [popupCoordinateOverlay, setPopupCoordinateOverlay] = useState<Overlay | undefined>();
   const mapRef = useRef(null);
   const popupRef = useRef(null);
@@ -28,7 +28,7 @@ const MapWrapper = () => {
     mapInit();
   }, []);
 
-  const onMapClickHandler = (e: any) => {
+  const onMapClick = (e: any) => {
     const tempCoordinate = e.coordinate.join().split(',');
 
     if (!popupCoordinateOverlay) {
@@ -39,20 +39,20 @@ const MapWrapper = () => {
       popup?.setPosition(undefined);
       popup?.setPosition(e.coordinate);
       setPopupCoordinateOverlay(popup);
-      setClickedCoordinages({ lat: tempCoordinate[0], long: tempCoordinate[1] });
+      setClickedCoordinates({ lat: tempCoordinate[0], long: tempCoordinate[1] });
     } else {
       popupCoordinateOverlay?.setPosition(undefined);
       popupCoordinateOverlay?.setPosition(e.coordinate);
     }
   };
 
-  const onPointerMoveHandler = (e: any) =>
+  const onPointerMove = (e: any) =>
     setPointerCoordinates({
       lat: e.coordinate.join().split(',')[0],
       long: e.coordinate.join().split(',')[1],
     });
 
-  const onLayersCheckChange = (e: React.ChangeEvent<HTMLInputElement>, mapDefinition: MWSLayer) => {
+  const onLayerCheckChange = (e: React.ChangeEvent<HTMLInputElement>, mapDefinition: MWSLayer) => {
     const { checked } = e.target;
 
     if (checked) {
@@ -85,10 +85,10 @@ const MapWrapper = () => {
       type: 'create-map',
       payload: { mapRef: mapRef?.current ?? undefined },
     });
-    dispatch({ type: 'add-event', payload: { eventName: 'click', callback: onMapClickHandler } });
+    dispatch({ type: 'add-event', payload: { eventName: 'click', callback: onMapClick } });
     dispatch({
       type: 'add-event',
-      payload: { eventName: 'pointermove', callback: onPointerMoveHandler },
+      payload: { eventName: 'pointermove', callback: onPointerMove },
     });
   };
 
@@ -97,33 +97,33 @@ const MapWrapper = () => {
       <MapMenu
         items={[
           {
-            inputName: 'checkExcavationAres',
+            inputName: 'checkExcavationAreas',
             title: 'Excavation Areas',
-            callback: onLayersCheckChange,
+            callback: onLayerCheckChange,
             mapDefinition: MWS_LAYERS.find((l) => l.name === 'excavationAreas') as MWSLayer,
           },
           {
             inputName: 'checkHikingNetworks',
             title: 'Regional Hiking Networks',
-            callback: onLayersCheckChange,
+            callback: onLayerCheckChange,
             mapDefinition: MWS_LAYERS.find((l) => l.name === 'regionalHiking') as MWSLayer,
           },
           {
             inputName: 'checkRuralWalkingRoutes',
             title: 'Rural Walking Routes',
-            callback: onLayersCheckChange,
+            callback: onLayerCheckChange,
             mapDefinition: MWS_LAYERS.find((l) => l.name === 'ruralWalkingRoutes') as MWSLayer,
           },
           {
             inputName: 'checkAdministrativeUnits',
             title: 'Administrative Units',
-            callback: onLayersCheckChange,
+            callback: onLayerCheckChange,
             mapDefinition: MWS_LAYERS.find((l) => l.name === 'administrativeUnits') as MWSLayer,
           },
           {
             inputName: 'checkAvailableElectricityGrid',
-            title: 'Available electricity grid capacity',
-            callback: onLayersCheckChange,
+            title: 'Available Electricity Grid Capacity',
+            callback: onLayerCheckChange,
             mapDefinition: MWS_LAYERS.find(
               (l) => l.name === 'availableElectricityGrid'
             ) as MWSLayer,
@@ -131,7 +131,7 @@ const MapWrapper = () => {
           {
             inputName: 'checkRegionalCyclingNetworks',
             title: 'Regional Cycling Networks',
-            callback: onLayersCheckChange,
+            callback: onLayerCheckChange,
             mapDefinition: MWS_LAYERS.find(
               (l) => l.name === 'regionalCyclingNetworksgovernmentServices'
             ) as MWSLayer,
@@ -139,13 +139,13 @@ const MapWrapper = () => {
           {
             inputName: 'checkGovernmentServices',
             title: 'Government Services',
-            callback: onLayersCheckChange,
+            callback: onLayerCheckChange,
             mapDefinition: MWS_LAYERS.find((l) => l.name === 'governmentServices') as MWSLayer,
           },
           {
             inputName: 'checkNationalRoadFile',
             title: 'National Road File',
-            callback: onLayersCheckChange,
+            callback: onLayerCheckChange,
             mapDefinition: MWS_LAYERS.find((l) => l.name === 'nationalRoadFile') as MWSLayer,
           },
         ]}
@@ -160,7 +160,7 @@ const MapWrapper = () => {
         }
         closeAction={() => popupCoordinateOverlay?.setPosition(undefined)}
       />
-      <MousePositionInfo lat={pointCoordinates.lat} long={pointCoordinates.long} />
+      <MousePositionInfo lat={pointerCoordinates.lat} long={pointerCoordinates.long} />
     </>
   );
 };
