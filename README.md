@@ -2,7 +2,7 @@
 
 ## About The Project
 
-Web app with OpenLayers and React.
+Web app with OpenLayers and React, this project was created to Cyclomedia technical assessment.
 
 ### Built With
 
